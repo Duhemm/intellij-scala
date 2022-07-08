@@ -10,10 +10,6 @@ import org.junit.Assert.assertEquals
 
 import scala.annotation.nowarn
 
-/**
- * Nikolay.Tropin
- * 2014-04-03
- */
 @nowarn("msg=ScalaLightPlatformCodeInsightTestCaseAdapter")
 class PatternAnnotatorTest extends ScalaLightPlatformCodeInsightTestCaseAdapter {
 

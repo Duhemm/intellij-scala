@@ -9,10 +9,6 @@ import org.jetbrains.plugins.scala.extensions._
 import org.jetbrains.plugins.scala.lang.psi.api.{ScalaFile, ScalaPsiElement}
 import org.junit.Assert._
 
-/**
- * Pavel Fatin
- */
-
 // TODO
 // In many tests, we test a particular part of annotation separately.
 // On the one hand, this is a good thing, as we can test the logic in isolation.

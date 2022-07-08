@@ -12,10 +12,6 @@ import org.jetbrains.jps.incremental.scala.local.zinc.Utils._
 
 import scala.jdk.CollectionConverters._
 
-/**
- * Nikolay.Tropin
- * 11/18/13
- */
 abstract class AbstractCompiler extends Compiler {
 
   def getReporter(client: Client): Reporter = new ClientReporter(client)

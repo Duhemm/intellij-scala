@@ -6,10 +6,6 @@ import org.jetbrains.plugins.scala.base.SimpleTestCase
 import org.jetbrains.plugins.scala.extensions._
 import org.jetbrains.plugins.scala.lang.psi.api.expr.ScUnderscoreSection
 
-/**
- * Pavel.Fatin, 18.05.2010
- */
-
 class PatternDefinitionAnnotatorTest extends SimpleTestCase {
   final val Header = "class A; class B; object A extends A; object B extends B\n"
 
