@@ -375,6 +375,8 @@ class SbtProjectImportingTest extends ImportingTestCase
 
   //noinspection TypeAnnotation
   // SCL-16204, SCL-17597
+  // TODO: Cutting corners to check if test execution time degradations have been addressed on recommendation from the platform team. Needs a proper replacement.
+  @nowarn("cat=deprecation")
   def testJavaLanguageLevelAndTargetByteCodeLevel_NoOptions(): Unit = {
     def doRunTest(): Unit = runTest(
       new project("java-language-level-and-target-byte-code-level-no-options") {

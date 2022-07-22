@@ -12,6 +12,8 @@ import com.intellij.testFramework.HeavyPlatformTestCase
 import org.jetbrains.plugins.scala.project.external.{ShownNotification, ShownNotificationsKey}
 import org.jetbrains.plugins.scala.util.assertions.CollectionsAssertions.assertCollectionEquals
 
+import scala.annotation.nowarn
+
 /**
  * TestCase class to use when testing ProjectDataService implementations
  * @author Nikolay Obedin
@@ -50,6 +52,8 @@ abstract class ProjectDataServiceTestCase extends HeavyPlatformTestCase {
 
 object ProjectDataServiceTestCase {
 
+  // TODO: Cutting corners to check if test execution time degradations have been addressed on recommendation from the platform team. Needs a proper replacement.
+  @nowarn("cat=deprecation")
   def importProjectData(projectData: DataNode[ProjectData], project: Project): Unit =
     ExternalSystemApiUtil.executeProjectChangeAction(true, new DisposeAwareProjectChange(project) {
       override def execute(): Unit =

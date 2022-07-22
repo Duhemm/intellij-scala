@@ -13,6 +13,8 @@ import com.intellij.openapi.externalSystem.util.{DisposeAwareProjectChange, Exte
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 
+import scala.annotation.nowarn
+
 abstract class ScalaAbstractProjectDataService[E, I](key: Key[E]) extends AbstractProjectDataService[E, I] {
 
   override def getTargetDataKey: Key[E] = key
@@ -32,6 +34,8 @@ abstract class ScalaAbstractProjectDataService[E, I](key: Key[E]) extends Abstra
       } yield module
   }
 
+  // TODO: Cutting corners to check if test execution time degradations have been addressed on recommendation from the platform team. Needs a proper replacement.
+  @nowarn("cat=deprecation")
   protected final def executeProjectChangeAction(project: Project)(action: => Unit): Unit =
     ExternalSystemApiUtil.executeProjectChangeAction(new DisposeAwareProjectChange(project) {
       override def execute(): Unit = action
