@@ -16,8 +16,8 @@ import java.io.File
 import scala.annotation.nowarn
 
 @nowarn("msg=ScalaLightPlatformCodeInsightTestCaseAdapter")
-abstract class CompletionTestBase extends base.ScalaLightPlatformCodeInsightTestCaseAdapter {
-  // Must be lazy so it can be overriden without early initializers
+abstract class FileTestDataCompletionTestBase extends base.ScalaLightPlatformCodeInsightTestCaseAdapter {
+  // Must be lazy so it can be overridden without early initializers
   protected lazy val caretMarker = "/*caret*/"
   protected lazy val extension: String = "scala"
 
