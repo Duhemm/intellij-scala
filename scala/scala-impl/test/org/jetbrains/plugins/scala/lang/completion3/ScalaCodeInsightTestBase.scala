@@ -38,10 +38,12 @@ abstract class ScalaCodeInsightTestBase extends ScalaLightCodeInsightFixtureTest
   override def getTestDataPath: String =
     s"${super.getTestDataPath}completion3/"
 
-  protected final def activeLookupWithItems(fileText: String,
-                                            completionType: CompletionType = BASIC,
-                                            invocationCount: Int = DEFAULT_TIME)
-                                           (items: LookupImpl => Iterable[LookupElement] = allItems) = {
+  protected final def activeLookupWithItems(
+    fileText: String,
+    completionType: CompletionType = BASIC,
+    invocationCount: Int = DEFAULT_TIME,
+    itemsExtractor: LookupImpl => Iterable[LookupElement] = allItems,
+  ): (LookupImpl, Iterable[LookupElement]) = {
     configureFromFileText(fileText)
 
     changePsiAt(getEditorOffset)
@@ -52,8 +54,11 @@ abstract class ScalaCodeInsightTestBase extends ScalaLightCodeInsightFixtureTest
     }
 
     LookupManager.getActiveLookup(getEditor) match {
-      case impl: LookupImpl => (impl, items(impl))
-      case _ => throw new AssertionError("Lookups not found")
+      case impl: LookupImpl =>
+        val items = itemsExtractor(impl)
+        (impl, items)
+      case _ =>
+        throw new AssertionError("Lookups not found")
     }
   }
 
@@ -82,7 +87,7 @@ abstract class ScalaCodeInsightTestBase extends ScalaLightCodeInsightFixtureTest
                                           invocationCount: Int = DEFAULT_TIME,
                                           completionType: CompletionType = BASIC)
                                          (predicate: LookupElement => Boolean = Function.const(true)): Unit = {
-    val (lookup, items) = activeLookupWithItems(fileText, completionType, invocationCount)()
+    val (lookup, items) = activeLookupWithItems(fileText, completionType, invocationCount)
 
     items.find(predicate) match {
       case Some(item) =>
@@ -114,7 +119,7 @@ abstract class ScalaCodeInsightTestBase extends ScalaLightCodeInsightFixtureTest
                                                              char: Char,
                                                              invocationCount: Int = DEFAULT_TIME,
                                                              completionType: CompletionType = BASIC): Unit = {
-    val (_, items) = activeLookupWithItems(fileText, completionType, invocationCount)()
+    val (_, items) = activeLookupWithItems(fileText, completionType, invocationCount)
     assertTrue(items.nonEmpty)
 
     myFixture.`type`(char)
@@ -126,7 +131,7 @@ abstract class ScalaCodeInsightTestBase extends ScalaLightCodeInsightFixtureTest
                                                    char: Char = REPLACE_SELECT_CHAR,
                                                    invocationCount: Int = DEFAULT_TIME,
                                                    completionType: CompletionType = BASIC): Unit = {
-    val (lookup, items) = activeLookupWithItems(fileText, completionType, invocationCount)()
+    val (lookup, items) = activeLookupWithItems(fileText, completionType, invocationCount)
     assertTrue(items.nonEmpty)
     lookup.finishLookup(char, null)
     checkResultByText(resultText)
